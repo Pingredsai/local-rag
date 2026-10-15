@@ -1,0 +1,72 @@
+# ============================================================
+#  LocalRAG —— 一键启动
+#
+#  启动：docker compose up -d
+#  访问：http://localhost:8080
+#
+#  三个服务：
+#    - qdrant    向量数据库
+#    - ollama    本地大模型运行时
+#    - backend   FastAPI 后端 + 前端页面
+# ============================================================
+services:
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: localrag-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./data/qdrant:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama:0.11.3
+    container_name: localrag-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/root/.ollama
+      - ./models:/models:ro
+    # 如果有 NVIDIA GPU，取消下面注释
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: localrag-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+      - OLLAMA_URL=http://ollama:11434
+      - EMBED_MODEL=${EMBED_MODEL:-bge-m3}
+      - LLM_MODEL=${LLM_MODEL:-qwen2.5:3b}
+      - TOP_K=${TOP_K:-5}
+      - USE_RERANK=${USE_RERANK:-true}
+      - FRONTEND_DIR=/app/frontend
+      - DOCS_DIR=/app/data/documents
+    volumes:
+      - ./data/documents:/app/data/documents
+      - ./frontend:/app/frontend:ro
+    depends_on:
+      qdrant:
+        condition: service_started
+      ollama:
+        condition: service_started
+
+volumes: {}

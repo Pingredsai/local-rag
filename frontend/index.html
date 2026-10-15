@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalRAG · 本地知识库</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- 左侧：文档管理 -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>LocalRAG</h1>
+    </div>
+    <p class="tagline">本地知识库 · 数据不出内网</p>
+
+    <div class="upload-box">
+      <input type="file" id="fileInput" hidden
+             accept=".pdf,.txt,.md,.docx">
+      <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+        上传文档
+      </button>
+      <p class="hint">支持 PDF / Word / TXT / Markdown</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>已索引文档 <span id="docCount">0</span></h2>
+      <ul id="docList" class="doc-list"></ul>
+    </div>
+
+    <div class="status" id="status"></div>
+  </aside>
+
+  <!-- 右侧：对话 -->
+  <main class="chat">
+    <div class="messages" id="messages">
+      <div class="empty-state">
+        <h2>开始提问</h2>
+        <p>先上传文档，然后基于你的资料提问。</p>
+        <p class="small">所有内容都在本地处理，不会联网。</p>
+      </div>
+    </div>
+
+    <div class="composer">
+      <textarea id="input" rows="1"
+        placeholder="输入问题，Enter 发送，Shift+Enter 换行"></textarea>
+      <button id="sendBtn" class="btn-send">发送</button>
+    </div>
+  </main>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

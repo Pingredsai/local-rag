@@ -1,0 +1,13 @@
+{
+  "name": "localrag-demo-tools",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "capture": "node scripts/capture-localrag.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.0"
+  }
+}

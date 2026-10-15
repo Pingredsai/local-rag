@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+  <title id="title">LocalRAG architecture</title>
+  <desc id="desc">A browser talks to a FastAPI backend. The backend stores documents locally, uses Ollama for embeddings and generation, and stores vectors in Qdrant.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 30px 'Segoe UI', Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 16px 'Segoe UI', Arial, sans-serif; fill: #64748b; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; filter: url(#shadow); }
+      .card-title { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #0f172a; }
+      .card-sub { font: 400 14px 'Segoe UI', Arial, sans-serif; fill: #64748b; }
+      .label { font: 600 13px 'Segoe UI', Arial, sans-serif; fill: #475569; }
+      .small { font: 500 12px 'Segoe UI', Arial, sans-serif; fill: #475569; }
+      .boundary { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 8 8; }
+      .arrow { stroke: #475569; stroke-width: 2.2; fill: none; marker-end: url(#arrow); }
+      .pill { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="780" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">LocalRAG Architecture</text>
+  <text x="60" y="84" class="subtitle">Private document Q&amp;A with local embeddings, vector search, and local generation</text>
+
+  <rect x="38" y="108" width="1124" height="602" rx="24" class="boundary"/>
+  <rect x="58" y="91" width="292" height="34" rx="17" fill="#e2e8f0"/>
+  <text x="76" y="113" class="label">Customer-controlled environment</text>
+
+  <!-- Browser -->
+  <rect x="80" y="176" width="240" height="118" rx="18" class="panel"/>
+  <rect x="80" y="176" width="240" height="8" rx="4" fill="#2563eb"/>
+  <text x="108" y="220" class="card-title">Browser UI</text>
+  <text x="108" y="248" class="card-sub">Upload documents</text>
+  <text x="108" y="272" class="card-sub">Ask questions and view sources</text>
+
+  <!-- FastAPI -->
+  <rect x="380" y="150" width="500" height="172" rx="20" class="panel"/>
+  <rect x="380" y="150" width="500" height="8" rx="4" fill="#0f766e"/>
+  <text x="408" y="190" class="card-title">FastAPI Backend</text>
+  <text x="408" y="214" class="card-sub">REST API, static UI, RAG orchestration</text>
+
+  <rect x="410" y="232" width="210" height="64" rx="12" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+  <text x="430" y="258" class="label">Document pipeline</text>
+  <text x="430" y="281" class="small">parse, chunk, index metadata</text>
+
+  <rect x="644" y="232" width="206" height="64" rx="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <text x="664" y="258" class="label">RAG orchestration</text>
+  <text x="664" y="281" class="small">retrieve, prompt, answer</text>
+
+  <!-- Document storage -->
+  <rect x="950" y="176" width="170" height="118" rx="18" class="panel"/>
+  <rect x="950" y="176" width="170" height="8" rx="4" fill="#d97706"/>
+  <text x="978" y="220" class="card-title">Documents</text>
+  <text x="978" y="248" class="card-sub">Original files</text>
+  <text x="978" y="272" class="card-sub">data/documents</text>
+
+  <!-- Qdrant -->
+  <rect x="374" y="420" width="236" height="142" rx="20" class="panel"/>
+  <rect x="374" y="420" width="236" height="8" rx="4" fill="#7c3aed"/>
+  <text x="404" y="462" class="card-title">Qdrant</text>
+  <text x="404" y="490" class="card-sub">Vector database</text>
+  <text x="404" y="514" class="card-sub">Top-K similarity search</text>
+  <text x="404" y="538" class="small">data/qdrant</text>
+
+  <!-- Ollama -->
+  <rect x="660" y="400" width="300" height="182" rx="20" class="panel"/>
+  <rect x="660" y="400" width="300" height="8" rx="4" fill="#059669"/>
+  <text x="690" y="442" class="card-title">Ollama</text>
+  <text x="690" y="466" class="card-sub">Local model runtime</text>
+
+  <rect x="688" y="486" width="244" height="34" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.2"/>
+  <text x="705" y="508" class="small">bge-m3 - embeddings</text>
+  <rect x="688" y="528" width="244" height="34" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2"/>
+  <text x="705" y="550" class="small">Qwen 2.5 - answer generation</text>
+
+  <!-- API arrows -->
+  <path d="M320 235 L380 235" class="arrow"/>
+  <text x="325" y="222" class="label">HTTP</text>
+  <path d="M880 235 L950 235" class="arrow"/>
+  <text x="894" y="222" class="label">files</text>
+
+  <path d="M500 322 C500 360 500 382 500 420" class="arrow"/>
+  <text x="510" y="383" class="label">vectors / search</text>
+
+  <path d="M760 322 C760 350 760 370 760 400" class="arrow"/>
+  <text x="770" y="371" class="label">embed / generate</text>
+
+  <!-- Indexing flow -->
+  <rect x="80" y="590" width="1040" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="102" y="621" class="label">Indexing</text>
+  <g>
+    <rect x="190" y="600" width="116" height="30" rx="15" class="pill"/><text x="218" y="620" class="small">Upload</text>
+    <rect x="322" y="600" width="116" height="30" rx="15" class="pill"/><text x="357" y="620" class="small">Parse</text>
+    <rect x="454" y="600" width="116" height="30" rx="15" class="pill"/><text x="491" y="620" class="small">Chunk</text>
+    <rect x="586" y="600" width="136" height="30" rx="15" class="pill"/><text x="617" y="620" class="small">Embed</text>
+    <rect x="738" y="600" width="150" height="30" rx="15" class="pill"/><text x="770" y="620" class="small">Store vectors</text>
+  </g>
+
+  <!-- Query flow -->
+  <rect x="80" y="652" width="1040" height="50" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="102" y="683" class="label">Query</text>
+  <g>
+    <rect x="190" y="662" width="116" height="30" rx="15" class="pill"/><text x="220" y="682" class="small">Question</text>
+    <rect x="322" y="662" width="116" height="30" rx="15" class="pill"/><text x="357" y="682" class="small">Embed</text>
+    <rect x="454" y="662" width="116" height="30" rx="15" class="pill"/><text x="481" y="682" class="small">Retrieve</text>
+    <rect x="586" y="662" width="136" height="30" rx="15" class="pill"/><text x="620" y="682" class="small">Prompt</text>
+    <rect x="738" y="662" width="150" height="30" rx="15" class="pill"/><text x="765" y="682" class="small">Generate</text>
+    <rect x="904" y="662" width="180" height="30" rx="15" class="pill"/><text x="928" y="682" class="small">Answer + sources</text>
+  </g>
+
+  <text x="60" y="750" class="subtitle">All runtime data stays inside the deployment boundary. Network access is required only for initial image and model downloads.</text>
+</svg>

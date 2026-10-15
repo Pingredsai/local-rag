@@ -1,0 +1,17 @@
+# 数据（文档、向量库、模型）不入库
+data/
+models/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 环境配置
+.env
+
+# 系统
+.DS_Store
+Thumbs.db
+demo/video/*.webm
