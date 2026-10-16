@@ -1,6 +1,6 @@
 # LocalRAG
 
-**A private, self-hosted knowledge base that answers questions from your own documents.**
+**English** | [简体中文](README.zh-CN.md) — **A private, self-hosted knowledge base that answers questions from your own documents.**
 
 LocalRAG runs entirely inside your infrastructure. Documents, embeddings, retrieval, and answer generation stay on your machines. No cloud API is required at runtime.
 
@@ -201,8 +201,8 @@ local-rag/
 ├── LICENSE                   MIT
 ├── SECURITY.md               Security policy
 ├── package.json              Demo tooling
-├── README.md                 Chinese README
-├── README.en.md              English README
+├── README.md                 English README
+├── README.zh-CN.md           Chinese README
 ├── docs/
 │   ├── architecture.md       Architecture explanation
 │   ├── architecture.svg      Architecture diagram

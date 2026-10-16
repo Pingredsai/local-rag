@@ -1,10 +1,9 @@
 # LocalRAG
 
-**一键部署的私有化知识库问答系统 —— 把你的文档喂给它，它基于你的资料回答问题，全程不联网。**
+**[English](README.md) | 简体中文** — **一键部署的私有化知识库问答系统 —— 把你的文档喂给它，它基于你的资料回答问题，全程不联网。**
 
 > ✅ 当前状态：**Docker 真实环境验证通过**（2026-10-15）
 > 已验证：Qdrant / Ollama / FastAPI 三服务启动、文档索引、向量检索、问答返回来源。
-> 下一步：评估公开仓库，准备客户 POC。
 
 ---
 
@@ -215,7 +214,8 @@ local-rag/
 ├── LICENSE                      MIT
 ├── SECURITY.md                  安全报告说明
 ├── package.json                 演示工具依赖
-├── README.en.md                 英文说明
+├── README.md                    英文说明
+├── README.zh-CN.md              中文说明
 ├── docs/
 │   ├── architecture.md         架构说明
 │   ├── architecture.svg        架构图
