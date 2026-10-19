@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>LocalRAG 私有知识库 POC 方案</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 210mm; height: 297mm; }
+  body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; color: #172033; background: #fff; }
+  .page {
+    width: 210mm; height: 297mm; padding: 14mm 15mm 12mm; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 90% 3%, rgba(37,99,235,.10), transparent 24%),
+      linear-gradient(180deg, #ffffff, #f8fbff 70%, #f3f8fb);
+  }
+  .topline { height: 4px; width: 100%; border-radius: 3px; background: linear-gradient(90deg, #0ea5e9, #10b981); }
+  header { display: flex; align-items: center; justify-content: space-between; margin-top: 7mm; }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 850; letter-spacing: -.03em; }
+  .mark { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg,#0284c7,#059669); font-size: 11px; }
+  .tag { padding: 5px 10px; border: 1px solid #b9e6dc; border-radius: 999px; color: #047857; background: #ecfdf5; font-size: 9px; font-weight: 800; letter-spacing: .08em; }
+  h1 { margin: 10mm 0 3mm; font-size: 31px; line-height: 1.18; letter-spacing: -.055em; color: #0b172b; }
+  h1 span { color: #0284c7; }
+  .subtitle { margin: 0; color: #5b6b82; font-size: 11px; line-height: 1.65; max-width: 160mm; }
+  .meta { display: flex; gap: 14px; margin-top: 7mm; padding: 4mm 5mm; border-radius: 11px; background: #0b172b; color: #dce8f4; font-size: 9.5px; }
+  .meta b { color: #67e8f9; }
+  .grid { display: grid; grid-template-columns: 1.22fr .78fr; gap: 8mm; margin-top: 8mm; }
+  h2 { margin: 0 0 3mm; color: #0b172b; font-size: 13px; }
+  .block { margin-bottom: 6mm; }
+  .block p { margin: 0; color: #5b6b82; font-size: 9.5px; line-height: 1.65; }
+  .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 2.4mm; }
+  .list li { position: relative; padding-left: 5mm; color: #3b4a60; font-size: 9.5px; line-height: 1.5; }
+  .list li:before { content: ""; position: absolute; left: 0; top: 1.6mm; width: 2mm; height: 2mm; border-radius: 50%; background: #10b981; }
+  .panel { padding: 5mm; border: 1px solid #dce7f2; border-radius: 11px; background: rgba(255,255,255,.84); }
+  .panel.blue { border-color: #c8e5f8; background: #f3faff; }
+  .panel.green { border-color: #c9f0e2; background: #f1fcf8; }
+  .panel.warn { border-color: #f4dfb9; background: #fffbef; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 3mm; }
+  .chip { padding: 2mm 3mm; border-radius: 999px; background: #eef5fb; color: #31506c; font-size: 8.5px; font-weight: 700; }
+  .deliverable { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 3mm; }
+  .deliverable div { padding: 3.5mm; border: 1px solid #e2eaf3; border-radius: 8px; background: #fff; }
+  .deliverable b { display: block; color: #0b172b; font-size: 9.5px; margin-bottom: 1mm; }
+  .deliverable span { color: #66758a; font-size: 8.5px; line-height: 1.45; }
+  .price { margin-top: 5mm; padding: 4.5mm 5mm; border-radius: 10px; color: #e9f7ff; background: linear-gradient(135deg,#0f3b66,#0c6256); }
+  .price b { color: #7ff1d4; font-size: 15px; }
+  .price span { display: block; margin-top: 1mm; font-size: 8.5px; color: #cce6ea; }
+  .right h2 { font-size: 12px; }
+  .right .panel { margin-bottom: 5mm; }
+  .right .panel p, .right .panel li { font-size: 8.8px; line-height: 1.55; }
+  .right ul { margin: 0; padding-left: 4mm; color: #5b6b82; }
+  .right li { margin: 1.5mm 0; }
+  .contact { margin-top: 5mm; padding: 4.5mm; border-radius: 10px; background: #0b172b; color: #dce8f4; }
+  .contact b { color: #fff; font-size: 10px; }
+  .contact div { margin-top: 1.5mm; font-size: 8.8px; color: #b8c7d8; }
+  .contact a { color: #7dd3fc; text-decoration: none; }
+  .footer { position: absolute; left: 15mm; right: 15mm; bottom: 7mm; display: flex; justify-content: space-between; border-top: 1px solid #dce7f2; padding-top: 3mm; color: #8592a3; font-size: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topline"></div>
+  <header>
+    <div class="brand"><span class="mark">LR</span><span>LocalRAG</span></div>
+    <div class="tag">PRIVATE KNOWLEDGE BASE · POC</div>
+  </header>
+
+  <h1>用你们自己的文档，<br><span>验证一套本地 AI 知识库</span></h1>
+  <p class="subtitle">在不把内部资料交给公有云的前提下，验证文档解析、语义检索和带来源回答是否能真正帮助团队找到资料。</p>
+
+  <div class="meta"><span><b>适用场景</b> 财税 / 律所 / 制造 / 内网</span><span><b>POC 周期</b> 5-10 个工作日</span><span><b>验证方式</b> 10-20 个真实问题</span></div>
+
+  <div class="grid">
+    <div class="left">
+      <div class="block">
+        <h2>这次 POC 要验证什么</h2>
+        <ul class="list">
+          <li>你们约定格式的文档能否被正确解析和切块。</li><li>真实问题能否检索到真正相关的资料片段。</li><li>回答是否能给出可核验的来源，而不是“看起来像”。</li><li>在你们现有机器或测试环境上，响应是否可接受。</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <h2>POC 交付内容</h2>
+        <div class="deliverable">
+          <div><b>本地环境部署</b><span>FastAPI + Qdrant + Ollama，Docker Compose 启动。</span></div>
+          <div><b>文档索引</b><span>文档解析、切块、本地向量化和来源展示。</span></div>
+          <div><b>测试问题集</b><span>双方确认 10-20 个代表性问题并记录结果。</span></div>
+          <div><b>评估报告</b><span>可用性、限制、问题清单和下一步建议。</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>客户需要提供</h2>
+        <div class="chips"><span class="chip">10-50 份脱敏文档</span><span class="chip">10-20 个真实问题</span><span class="chip">测试机器或环境</span><span class="chip">1 位业务对接人</span></div>
+      </div>
+
+      <div class="price"><b>参考费用：¥3,000-8,000</b><span>以范围确认单为准；如后续进入正式部署，POC 费用可抵扣。客户负责硬件、网络和脱敏资料。</span></div>
+    </div>
+
+    <div class="right">
+      <div class="panel blue">
+        <h2>数据边界</h2>
+        <p>文档、向量和模型运行在客户自有环境。首次安装需要联网拉取镜像和模型；初始化完成后，运行时不调用公有云 AI API。</p>
+      </div>
+
+      <div class="panel green">
+        <h2>技术栈</h2>
+        <div class="chips"><span class="chip">Ollama</span><span class="chip">Qdrant</span><span class="chip">FastAPI</span><span class="chip">bge-m3</span><span class="chip">Qwen2.5</span><span class="chip">Docker</span></div>
+      </div>
+
+      <div class="panel warn">
+        <h2>本阶段不包含</h2>
+        <ul><li>扫描件 OCR</li><li>企业 SSO / 多租户权限</li><li>复杂业务系统集成</li><li>7×24 生产级运维</li></ul>
+      </div>
+
+      <div class="contact"><b>下一步：20 分钟需求确认</b><div>邮箱：<a href="mailto:siquhjh@163.com">siquhjh@163.com</a></div><div>GitHub：<a href="https://github.com/Pingredsai/local-rag">github.com/Pingredsai/local-rag</a></div><div>请附：行业、文档类型与数量、当前检索方式。</div></div>
+    </div>
+  </div>
+
+  <div class="footer"><span>LocalRAG · 私有化知识库问答 · v0.1.0</span><span>Pingredsai · 2026-10</span></div>
+</div>
+</body>
+</html>

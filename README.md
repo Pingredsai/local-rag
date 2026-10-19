@@ -2,6 +2,8 @@
 
 **English** | [简体中文](README.zh-CN.md) — **A private, self-hosted knowledge base that answers questions from your own documents.**
 
+**Website:** <https://pingredsai.github.io/local-rag/>
+
 LocalRAG runs entirely inside your infrastructure. Documents, embeddings, retrieval, and answer generation stay on your machines. No cloud API is required at runtime.
 
 > **Status:** Docker deployment verified on 2026-10-15  
