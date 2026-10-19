@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Please report security issues privately to `siquhjh@gmail.com`.
+Please report security issues privately to `siquhjh@163.com`.
 
 Do not open a public issue for vulnerabilities that could expose deployed data,
 credentials, or private documents.
