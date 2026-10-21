@@ -4,6 +4,8 @@
 
 **Website:** <https://pingredsai.github.io/local-rag/>
 
+> **Windows native beta (2026-10-21):** No Docker, WSL, or system Python required. [Download LocalRAG Desktop v0.3.0 Beta](https://github.com/Pingredsai/local-rag/releases/tag/v0.3.0-beta.1), extract the package, and double-click `启动 LocalRAG.exe`. This is an unsigned technical beta; the ZIP includes a Windows prompt guide and SHA256 checksum.
+
 LocalRAG runs entirely inside your infrastructure. Documents, embeddings, retrieval, and answer generation stay on your machines. No cloud API is required at runtime.
 
 > **Status:** Docker deployment verified on 2026-10-15  

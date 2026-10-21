@@ -7,6 +7,8 @@
 
 **官网**：<https://pingredsai.github.io/local-rag/>
 
+> **Windows 原生内测版（2026-10-21）：** 不需要 Docker、WSL 或系统 Python。前往 [下载 LocalRAG Desktop v0.3.0 内测版](https://github.com/Pingredsai/local-rag/releases/tag/v0.3.0-beta.1)，解压后双击 `启动 LocalRAG.exe`。当前为未签名技术内测版，ZIP 内含 Windows 提示说明和 SHA256 校验文件。
+
 ---
 
 ## 为什么需要它
