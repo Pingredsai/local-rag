@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: LocalRAG Desktop beta download
+    url: https://github.com/Pingredsai/local-rag/releases/tag/v0.3.0-beta.1
+    about: Download the beta and read the Windows security prompt instructions.
+  - name: Contact by email
+    url: mailto:siquhjh@163.com
+    about: Send screenshots or a diagnostic report if GitHub Issues are not convenient.

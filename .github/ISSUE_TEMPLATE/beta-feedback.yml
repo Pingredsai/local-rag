@@ -1,0 +1,80 @@
+name: Beta installation feedback
+description: Report installation, startup, parsing, or first-question issues in the Windows beta.
+title: "[Beta] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing LocalRAG Desktop.
+
+        Please do **not** upload real client documents, credentials, or other sensitive files. Use synthetic or redacted documents when possible.
+
+  - type: input
+    id: windows_version
+    attributes:
+      label: Windows version
+      description: For example, Windows 11 23H2 or Windows 10 22H2.
+      placeholder: Windows 11 23H2
+    validations:
+      required: true
+
+  - type: input
+    id: memory
+    attributes:
+      label: Installed RAM
+      placeholder: 16 GB
+    validations:
+      required: true
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package did you use?
+      options:
+        - LocalRAG-Beta-v0.3.zip
+        - LocalRAG-Setup.exe
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where did you get stuck?
+      options:
+        - Download or extraction
+        - Windows security prompt
+        - Launcher environment check
+        - Model loading or startup
+        - Document upload or parsing
+        - First question / answer generation
+        - Source references
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include the exact error text, what you clicked, and what you expected to happen.
+      placeholder: The launcher reached... then...
+    validations:
+      required: true
+
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostic information
+      description: If possible, generate the diagnostic ZIP from the launcher and paste the most relevant log lines here. Do not upload sensitive documents.
+      placeholder: Paste the relevant log lines or error message.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: I confirm that I did not include real client documents, credentials, or other sensitive files.
+          required: true
