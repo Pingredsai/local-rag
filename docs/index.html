@@ -113,13 +113,6 @@
     .use-case { padding: 20px; border: 1px solid var(--line); border-radius: 15px; background: rgba(15, 31, 53, .55); }
     .use-case h3 { margin: 0 0 7px; font-size: 16px; }
     .use-case p { margin: 0; color: var(--muted); font-size: 13px; }
-    .poc { padding: 36px; border: 1px solid rgba(103, 232, 249, .25); border-radius: 24px; background: linear-gradient(135deg, rgba(37, 99, 235, .17), rgba(16, 185, 129, .08)); }
-    .poc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 28px 0; }
-    .poc-item { padding: 18px; border: 1px solid rgba(148, 163, 184, .2); border-radius: 14px; background: rgba(7, 17, 31, .38); }
-    .poc-item b { color: var(--cyan); font-size: 12px; letter-spacing: .1em; }
-    .poc-item h3 { margin: 8px 0 6px; font-size: 16px; }
-    .poc-item p { margin: 0; color: var(--muted); font-size: 13px; }
-    .note { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(148, 163, 184, .18); color: var(--muted); font-size: 13px; }`r`n    .note-actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .limits { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .limit-box { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(15, 31, 53, .55); }
     .limit-box h3 { margin: 0 0 12px; font-size: 18px; }
@@ -137,7 +130,7 @@
       .hero { padding-top: 58px; gap: 36px; }
       .hero-visual { max-width: 680px; }
       .cards { grid-template-columns: repeat(2, 1fr); }
-      .use-cases, .poc-grid { grid-template-columns: repeat(2, 1fr); }
+      .use-cases { grid-template-columns: repeat(2, 1fr); }
       .nav-links { display: none; }
     }
     @media (max-width: 560px) {
@@ -145,9 +138,8 @@
       h1 { font-size: 44px; }
       h2 { font-size: 32px; }
       .section { padding: 64px 0; }
-      .cards, .use-cases, .poc-grid, .limits { grid-template-columns: 1fr; }
-      .poc, .cta-box { padding: 25px; }
-      .note { align-items: flex-start; flex-direction: column; }
+      .cards, .use-cases, .limits { grid-template-columns: 1fr; }
+      .cta-box { padding: 25px; }
       .trust-inner { align-items: flex-start; flex-direction: column; }
     }
   </style>
@@ -160,7 +152,6 @@
         <a href="#features">能力</a>
         <a href="#architecture">架构</a>
         <a href="#demo">演示</a>
-        <a href="#poc">POC 流程</a>
         <a href="https://github.com/Pingredsai/local-rag" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
       <a class="btn btn-primary" href="https://github.com/Pingredsai/local-rag/releases/tag/v0.3.0-beta.1" target="_blank" rel="noreferrer">下载 Windows 内测版</a>
@@ -209,7 +200,7 @@
         <div class="quote">案件材料、患者信息、财务底稿、工艺配方——这些内容的核心问题不是“方不方便”，而是“能不能出内网”。</div>
       </div>
       <div class="problem-list">
-        <div class="problem-item"><strong>数据边界</strong><span>文档、切片、向量和模型都运行在客户自己的环境里。</span></div>
+        <div class="problem-item"><strong>数据边界</strong><span>文档、切片、向量和模型都运行在自己的电脑或内网环境里。</span></div>
         <div class="problem-item"><strong>答案可追溯</strong><span>回答基于检索片段，并展示命中的文档与相似度。</span></div>
         <div class="problem-item"><strong>不被平台锁定</strong><span>模型、知识库和部署方式都可以替换和维护。</span></div>
       </div>
@@ -219,26 +210,26 @@
       <div class="section-head"><div class="eyebrow">Capabilities</div><h2>一套能落地的私有知识库闭环</h2><p>不追求把所有 AI 能力堆在一起，先把“文档能被找到、回答能被验证”做扎实。</p></div>
       <div class="cards">
         <div class="card"><div class="num">01</div><h3>文档解析</h3><p>支持文本型 PDF、DOCX、TXT 和 Markdown，自动解析和切块。</p></div>
-        <div class="card"><div class="num">02</div><h3>本地向量化</h3><p>使用 Ollama 加载 bge-m3，把文本转成本地向量。</p></div>
+        <div class="card"><div class="num">02</div><h3>本地向量化</h3><p>使用 bge-small-zh 在 Windows 本机生成中文向量。</p></div>
         <div class="card"><div class="num">03</div><h3>检索问答</h3><p>问题先检索相关片段，再由本地模型基于上下文生成答案。</p></div>
         <div class="card"><div class="num">04</div><h3>来源引用</h3><p>前端展示命中的文档、文本块和相似度，方便人工核验。</p></div>
         <div class="card"><div class="num">05</div><h3>本地生成</h3><p>Qwen 系列模型在部署环境内运行，不依赖云端 AI API。</p></div>
-        <div class="card"><div class="num">06</div><h3>可部署</h3><p>FastAPI + Qdrant + Ollama 通过 Docker Compose 统一启动。</p></div>
+        <div class="card"><div class="num">06</div><h3>Windows 原生启动</h3><p>Qdrant、llama.cpp 和 FastAPI 由桌面启动器统一启动和检查。</p></div>
       </div>
     </section>
 
     <section class="wrap section" id="architecture">
-      <div class="section-head"><div class="eyebrow">Architecture</div><h2>部署边界清楚，组件职责也清楚</h2><p>数据在本地闭环中流动，外部 API 不参与运行时的文档处理和答案生成。</p></div>
+      <div class="section-head"><div class="eyebrow">Architecture</div><h2>本地组件各司其职</h2><p>数据在本地闭环中流动，外部 API 不参与运行时的文档处理和答案生成。</p></div>
       <div class="arch">
         <a class="arch-box" href="architecture.svg" target="_blank" rel="noreferrer"><img src="architecture.svg" alt="LocalRAG 技术架构图"></a>
         <div class="arch-copy">
-          <h3>三个容器，一条完整链路</h3>
+          <h3>三个本地服务，一条完整链路</h3>
           <ul>
-            <li><strong>FastAPI</strong>：解析、切块、RAG 编排和 Web API</li>
-            <li><strong>Qdrant</strong>：持久化向量和相似度检索</li>
-            <li><strong>Ollama</strong>：本地 embedding 与答案生成</li>
+            <li><strong>FastAPI</strong>：解析、切块、RAG 编排和本地 Web API</li>
+            <li><strong>Qdrant</strong>：持久化向量并提供相似度检索</li>
+            <li><strong>llama.cpp</strong>：本地中文 embedding 与答案生成</li>
           </ul>
-          <p>首次安装需要联网获取镜像和模型；初始化完成后，运行时不调用公有云 AI API。</p>
+          <p>Windows 启动器会检查环境、启动本地服务并打开浏览器；运行时不调用公有云 AI API。</p>
           <a class="btn btn-ghost" href="https://github.com/Pingredsai/local-rag/blob/main/docs/architecture.md" target="_blank" rel="noreferrer">查看架构说明 ↗</a>
         </div>
       </div>
@@ -248,7 +239,7 @@
       <div class="demo-copy">
         <div class="eyebrow">Demo · 42 seconds</div>
         <h2>从上传文档到回答，真实跑一遍。</h2>
-        <p>这段录屏来自真实 Docker 环境，不是概念演示。你会看到文档索引、基于资料的问答，以及来源引用。</p>
+        <p>这段录屏来自真实本地知识库流程，不是概念演示。你会看到文档索引、基于资料的问答，以及来源引用。</p>
         <div class="demo-steps">
           <div class="demo-step"><b>1</b><span>上传虚构员工手册</span></div>
           <div class="demo-step"><b>2</b><span>自动解析并索引为 3 个文本块</span></div>
@@ -265,7 +256,7 @@
     </section>
 
     <section class="wrap section" id="use-cases">
-      <div class="section-head"><div class="eyebrow">Use cases</div><h2>先服务“必须本地”的场景</h2><p>不适合所有企业，但适合资料密度高、保密要求强、愿意用小规模 POC 验证的团队。</p></div>
+      <div class="section-head"><div class="eyebrow">Use cases</div><h2>适合哪些使用场景</h2><p>适合资料多、查找耗时、希望数据继续留在自己电脑或内网里的个人和小团队。</p></div>
       <div class="use-cases">
         <div class="use-case"><h3>律所 / 法务</h3><p>案件材料、合同、法规和历史意见检索。</p></div>
         <div class="use-case"><h3>财税 / 审计</h3><p>政策、底稿、审计报告和内部问答。</p></div>
@@ -274,30 +265,10 @@
       </div>
     </section>
 
-    <section class="wrap section" id="poc">
-      <div class="poc">
-        <div class="eyebrow">Start small</div>
-        <h2>先用 10-50 份脱敏文档，验证是否值得继续。</h2>
-        <p style="color:var(--muted);max-width:760px;margin:0">POC 不要求客户先采购系统，也不需要把真实敏感资料交给我们。用一小批脱敏资料和真实问题，验证解析、检索和来源引用。</p>
-        <div class="poc-grid">
-          <div class="poc-item"><b>STEP 01</b><h3>20 分钟沟通</h3><p>确认文档类型、使用场景和数据边界。</p></div>
-          <div class="poc-item"><b>STEP 02</b><h3>准备测试集</h3><p>10-50 份脱敏文档，10-20 个真实问题。</p></div>
-          <div class="poc-item"><b>STEP 03</b><h3>部署与验证</h3><p>在约定环境部署并记录检索和回答结果。</p></div>
-          <div class="poc-item"><b>STEP 04</b><h3>评估报告</h3><p>反馈可用性、限制和下一步部署建议。</p></div>
-        </div>
-        <div class="note">
-          <span>POC 参考周期：5-10 个工作日 · 参考费用：¥3,000-8,000 · 可抵扣后续正式部署</span>
-          <div class="note-actions">
-            <a class="btn btn-primary" href="mailto:siquhjh@163.com?subject=LocalRAG%20POC%20%E5%92%A8%E8%AF%A2&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E4%BA%86%E8%A7%A3%20LocalRAG%20%E7%9A%84%20POC%EF%BC%9A%0A%0A%E8%A1%8C%E4%B8%9A%EF%BC%9A%0A%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%95%B0%E9%87%8F%EF%BC%9A%0A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A%0A">获取 POC 方案</a>
-            <a class="btn btn-ghost" href="LocalRAG-POC-one-pager.pdf" target="_blank" rel="noreferrer">下载 POC PDF</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section class="wrap section">
       <div class="limits">
-        <div class="limit-box"><h3>当前版本适合</h3><ul><li>文本型 PDF、DOCX、TXT、Markdown</li><li>小团队内部知识检索和问答</li><li>本地 Docker 环境或单机服务器</li><li>对数据边界和来源可追溯性有要求的场景</li></ul></div>
+        <div class="limit-box"><h3>当前版本适合</h3><ul><li>文本型 PDF、DOCX、TXT、Markdown</li><li>小团队内部知识检索和问答</li><li>Windows 10/11 x64 本机或内网环境</li><li>对数据边界和来源可追溯性有要求的场景</li></ul></div>
         <div class="limit-box"><h3>当前版本不包含</h3><ul><li>扫描件 OCR</li><li>多租户、企业 SSO 和复杂权限</li><li>Reranker 重排</li><li>7×24 生产级 SLA</li></ul></div>
       </div>
     </section>
@@ -305,11 +276,11 @@
     <section class="wrap cta">
       <div class="cta-box">
         <div class="eyebrow">Private by design</div>
-        <h2>先验证你的文档，能不能真的被 AI 找到。</h2>
-        <p>把你的行业、文档类型和当前检索方式发给我。我会先判断是否适合做 POC，再确认是否需要进一步部署。</p>
+        <h2>把本机文档，变成可追溯的答案。</h2>
+        <p>下载 Windows 内测版，解压后双击启动器。遇到安装或使用问题，可以通过 GitHub Issue 或邮件反馈。</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="mailto:siquhjh@163.com?subject=LocalRAG%20POC%20%E5%92%A8%E8%AF%A2">siquhjh@163.com</a>
-          <a class="btn btn-ghost" href="https://github.com/Pingredsai/local-rag" target="_blank" rel="noreferrer">GitHub 项目 ↗</a>
+          <a class="btn btn-primary" href="https://github.com/Pingredsai/local-rag/releases/tag/v0.3.0-beta.1" target="_blank" rel="noreferrer">下载 Windows 内测版 ↗</a>
+          <a class="btn btn-ghost" href="https://github.com/Pingredsai/local-rag/issues/new?template=beta-feedback.yml" target="_blank" rel="noreferrer">反馈问题 ↗</a>
         </div>
       </div>
     </section>
